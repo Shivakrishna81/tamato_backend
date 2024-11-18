@@ -2,12 +2,19 @@ import { Module } from '@nestjs/common';
 import { MenusService } from './menus.service';
 import { MenusController } from './menus.controller';
 import { DatabaseModule } from 'src/database/database.module';
+import { AbstractMenuService } from './menus.abstract';
 
 
 @Module({
-  imports:[DatabaseModule],
-  providers: [MenusService],
+  imports: [],
   controllers: [MenusController],
-  exports:[MenusService]
+  providers: [{
+    provide: AbstractMenuService,
+    useClass: MenusService
+  }],
+  exports: [{
+    provide: AbstractMenuService,
+    useClass: MenusService
+  }]
 })
-export class MenusModule {}
+export class MenusModule { }

@@ -1,7 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
 import { AppLogger } from "./logger";
 import { timestamp } from "rxjs";
-
+import { Response as ExpressResponse, Request as ExpressRequest } from 'express';
 
 
 @Catch() 
@@ -10,7 +10,7 @@ export class GlobalExceptionFilter implements ExceptionFilter{
 
     catch(exception:unknown,host:ArgumentsHost){
         const ctx=host.switchToHttp();
-        const response=ctx.getResponse<Response>();
+        const response=ctx.getResponse<ExpressResponse>();
         const request=ctx.getRequest<Request>();
         
         const status=exception instanceof HttpException
@@ -23,9 +23,7 @@ export class GlobalExceptionFilter implements ExceptionFilter{
 
         const errorResponse={
             status,
-            timestamp: new Date().toISOString(),
-            path: request.url,
-            method:request.method 
+            message
         };
 
         this.appLogger.logError(message, status, {
@@ -33,5 +31,6 @@ export class GlobalExceptionFilter implements ExceptionFilter{
             method:request.method,
             body:request.body
         })
+        response.status(status).json(errorResponse);
     }
 }

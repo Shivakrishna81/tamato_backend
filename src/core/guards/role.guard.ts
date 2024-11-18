@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { ROLES_KEY } from 'src/decorators/role.decorator';
+import { ROLES_KEY } from 'src/core/decorators/role.decorator';
 import { messages } from 'src/shared/messages.shared';
 
 @Injectable()

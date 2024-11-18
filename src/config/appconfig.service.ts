@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppConfigService {
-	public readonly envConfig: { [key: string]: any } = {};
+	public readonly envConfig: { [key: string]:any } = {};
 
 	constructor() {
 

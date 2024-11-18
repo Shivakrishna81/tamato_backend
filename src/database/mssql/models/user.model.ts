@@ -1,31 +1,35 @@
-import { Column,Model,Table,HasMany, DataType, PrimaryKey } from "sequelize-typescript";
-import {v4 as uuidv4} from 'uuid'
+import { Column, Model, Table, HasMany, DataType, PrimaryKey } from "sequelize-typescript";
+import { v4 as uuidv4 } from 'uuid'
 
 @Table({
-    tableName:'users'
+    tableName: 'users'
 })
-export class User extends Model<User>{
+export class User extends Model<User> {
     @Column({
-        type:DataType.UUID,
-        defaultValue:uuidv4,
-        allowNull:false,
-        primaryKey:true,
+        type: DataType.UUID,
+        defaultValue: uuidv4,
+        allowNull: false,
+        primaryKey: true,
     })
-    userId:string;
-    
-    @Column
-    username:string 
-    
-    @Column({
-        unique:true
-    })
-    email:string
+    userId: string;
 
     @Column({
-        defaultValue:"user"
+        allowNull: true
     })
-    role:string 
+    username: string
 
-    @Column
-    password:string
+    @Column({
+        unique: true
+    })
+    email: string
+
+    @Column({
+        defaultValue: "user"
+    })
+    role: string
+
+    @Column({
+        allowNull: true
+    })
+    password: string
 }

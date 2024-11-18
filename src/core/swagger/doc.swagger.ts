@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 
 export function SwaggerSetUp(app:INestApplication){
     const config=new DocumentBuilder() 
-    .setTitle("Tamata Restuarant API's")
+    .setTitle("TS Eats Restuarant API's")
     .setDescription("Nestjs code to perform CRUD operations")
     .setVersion('1.0')
     .addBearerAuth()

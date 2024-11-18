@@ -21,6 +21,7 @@ export class AppLogger extends Logger{
         }
         else{
             this.writeLogToFile(logMessage)
+            
         }
         super.error(logMessage)
     }

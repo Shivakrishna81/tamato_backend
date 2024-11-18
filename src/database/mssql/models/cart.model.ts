@@ -8,7 +8,8 @@ export class Cart extends Model<Cart>{
     @Column({
         type:DataType.UUID,
         defaultValue:uuidv4,
-        allowNull:false 
+        allowNull:false,
+        primaryKey:true,
     })
     cartId:string
 

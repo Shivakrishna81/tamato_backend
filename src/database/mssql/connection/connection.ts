@@ -1,32 +1,33 @@
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { SequelizeModule } from "@nestjs/sequelize";
+import { SequelizeModule } from '@nestjs/sequelize';
+import { AppConfigService } from 'src/config/appconfig.service';  // Import AppConfigService
 
 export const DatabaseConnection = SequelizeModule.forRootAsync({
-  imports: [ConfigModule],
-  inject: [ConfigService],
-  useFactory: (configService: ConfigService) => ({
+  imports: [],
+  inject: [AppConfigService], 
+  useFactory: (appConfigService: AppConfigService) => ({
     dialect: 'mssql',
     dialectModule: require('tedious'),
-    host: configService.get<string>('DB_HOST'),
-    port: configService.get<number>('DB_PORT'),
-    username: configService.get<string>('DB_USERNAME'),
-    password: configService.get<string>('DB_PASSWORD'),
-    database: configService.get<string>('DB_NAME'),
-    dialectOptions: {
-      options: {
-        encrypt: true,
-        trustServerCertificate: true, 
-      },
-      authentication: {
-        type: 'ntlm',
-        options: {
-          domain: configService.get<string>('DB_DOMAIN'),
-          userName: configService.get<string>('DB_USERNAME'),
-          password: configService.get<string>('DB_PASSWORD'),
-        },
-      },
-    },
+    host: appConfigService.envConfig.db.host,   
+    port: appConfigService.envConfig.db.port,   
+    username: appConfigService.envConfig.db.username,  
+    password: appConfigService.envConfig.db.password,  
+    database: appConfigService.envConfig.db.database,  
+     trustServerCertificate: true, 
+    // dialectOptions: {
+    //   options: {
+    //     encrypt: true,
+    //     trustServerCertificate: true, 
+    //   },
+    //   authentication: {
+    //     type: 'ntlm',
+    //     options: {
+    //       domain: appConfigService.envConfig.db.domain,  
+    //       userName: appConfigService.envConfig.db.username,  
+    //       password: appConfigService.envConfig.db.password, 
+    //     },
+    //   },
+    // },
     autoLoadModels: true,
-    synchronize: true, 
+    synchronize: true,
   }),
 });
